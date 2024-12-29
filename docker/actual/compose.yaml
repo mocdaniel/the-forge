@@ -1,0 +1,24 @@
+services:
+  actual:
+    container_name: actual
+    image: actualbudget/actual-server:24.12.0
+    labels:
+      traefik.enable: true
+      traefik.http.routers.actual.entrypoints: websecure
+      traefik.http.routers.actual.rule: Host(`actual.bodkys.house`)
+      traefik.http.routers.actual.service: actual
+      traefik.http.routers.actual.tls.certResolver: civo
+      traefik.http.routers.actual.tls.domains.0.main: actual.bodkys.house
+      traefik.http.services.actual.loadbalancer.server.port: 5006
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - actual_data:/data
+
+networks:
+  traefik_traefik:
+    external: true
+
+volumes:
+  actual_data: {}
