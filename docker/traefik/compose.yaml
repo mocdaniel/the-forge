@@ -4,7 +4,7 @@ services:
       --api.dashboard
       --certificatesresolvers.civo.acme.dnschallenge.provider=civo
       --certificatesresolvers.civo.acme.email="mail@dbodky.me"
-      --certificatesresolvers.civo.acme.storage=acme.json
+      --certificatesresolvers.civo.acme.storage=/acme/acme.json
       --entrypoints.websecure.address=:443
       --providers.docker
       --providers.docker.exposedByDefault=false
@@ -31,7 +31,7 @@ services:
       - civo_token
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./config:/etc/traefik
+      - traefik_acme_store:/acme
 
 networks:
   traefik: {}
@@ -39,3 +39,6 @@ networks:
 secrets:
   civo_token:
     environment: PORTAINER_CIVO_TOKEN
+
+volumes:
+  traefik_acme_store: {}
