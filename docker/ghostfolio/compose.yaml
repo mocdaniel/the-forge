@@ -1,0 +1,50 @@
+services:
+  ghostfolio:
+    container_name: ghostfolio
+    image: ghostfolio/ghostfolio:2.131.0
+    environment:
+      ACCESS_TOKEN_SALT: ${PORTAINER_ACCESS_TOKEN_SALT}
+      DATABASE_URL: postgresql://ghostfolio:${PORTAINER_POSTGRES_PASSWORD}@postgres:5432/ghostfolio?connect_timeout=300&sslmode=prefer
+      JWT_SECRET_KEY: ${PORTAINER_JWT_SECRET_KEY}
+      NODE_ENV: production
+      REDIS_HOST: redis
+    labels:
+      traefik.enable: true
+      traefik.http.routers.ghostfolio.entrypoints: websecure
+      traefik.http.routers.ghostfolio.rule: Host(`ghostfolio.bodkys.house`)
+      traefik.http.routers.ghostfolio.service: ghostfolio
+      traefik.http.routers.ghostfolio.tls.certResolver: civo
+      traefik.http.routers.ghostfolio.tls.domains.0.main: ghostfolio.bodkys.house
+      traefik.http.services.ghostfolio.loadbalancer.server.port: 3333
+    networks:
+      - traefik_traefik
+      - ghostfolio
+    restart: unless-stopped
+
+  postgres:
+    container_name: ghostfolio-postgres
+    image: postgres:16.6
+    environment:
+      POSTGRES_DB: ghostfolio
+      POSTGRES_PASSWORD: ${PORTAINER_POSTGRES_PASSWORD}
+      POSTGRES_USER: ghostfolio
+    networks:
+      - ghostfolio
+    restart: unless-stopped
+    volumes:
+      - ghostfolio_postgres:/var/lib/postgresql/data
+
+  redis:
+    container_name: ghostfolio-redis
+    image: redis:alpine3.20
+    networks:
+      - ghostfolio
+    restart: unless-stopped
+
+networks:
+  traefik_traefik:
+    external: true
+  ghostfolio: {}
+
+volumes:
+  ghostfolio_postgres: {}
