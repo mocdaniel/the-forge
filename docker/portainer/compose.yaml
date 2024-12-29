@@ -2,13 +2,26 @@ services:
   portainer:
     container_name: portainer
     image: portainer/portainer-ee:2.25.1
+    labels:
+      traefik.enable: true
+      traefik.http.routers.portainer.entrypoints: websecure
+      traefik.http.routers.portainer.rule: Host(`portainer.bodkys.house`)
+      traefik.http.routers.portainer.service: portainer
+      traefik.http.routers.portainer.tls.certResolver: civo
+      traefik.http.routers.portainer.tls.domains.0.main: portainer.bodkys.house
+      traefik.http.services.portainer.loadbalancer.server.port: 9000
+    networks:
+      - traefik_traefik
     ports:
       - 8000:8000
-      - 9443:9443
-    restart: always
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+networks:
+  traefik_traefik:
+    external: true
 
 volumes:
   portainer_data: {}
