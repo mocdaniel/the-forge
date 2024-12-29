@@ -13,7 +13,7 @@ services:
     networks:
       - traefik_traefik
     ports:
-      - 53:53
+      - 53:53/udp
     restart: always
     volumes:
       - adguard_workdir:/opt/adguardhome/work
