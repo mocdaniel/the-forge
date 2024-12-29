@@ -2,12 +2,26 @@ services:
   adguard:
     container_name: adguard
     image: adguard/adguardhome:v0.107.55
+    labels:
+      traefik.enable: true
+      traefik.http.routers.adguard.entrypoints: websecure
+      traefik.http.routers.adguard.rule: Host(`adguard.bodkys.house`)
+      traefik.http.routers.adguard.service: adguard
+      traefik.http.routers.adguard.tls.certResolver: civo
+      traefik.http.routers.adguard.tls.domains.0.main: adguard.bodkys.house
+      traefik.http.services.adguard.loadbalancer.server.port: 3000
+    networks:
+      - traefik_traefik
     ports:
       - 53:53
-      - 3000:3000
+    restart: always
     volumes:
       - adguard_workdir:/opt/adguardhome/work
       - adguard_confdir:/opt/adguardhome/conf
+
+networks:
+  traefik_traefik:
+    external: true
 
 volumes:
   adguard_workdir: {}
