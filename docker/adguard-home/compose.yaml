@@ -1,0 +1,14 @@
+services:
+  adguard:
+    container_name: adguard
+    image: adguard/adguardhome:v0.107.55
+    ports:
+      - 53:53
+      - 3000:3000
+    volumes:
+      - adguard_workdir:/opt/adguardhome/work
+      - adguard_confdir:/opt/adguardhome/conf
+
+volumes:
+  adguard_workdir: {}
+  adguard_confdir: {}

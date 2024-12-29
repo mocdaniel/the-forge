@@ -1,0 +1,19 @@
+---
+- name: Install Docker
+  hosts: docker
+  become: true
+  vars:
+    docker_users:
+      - daniel
+  roles:
+  - geerlingguy.docker
+  tasks:
+  - name: Ensure target directories exist
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+    loop:
+      - /opt/docker

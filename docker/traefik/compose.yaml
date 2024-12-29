@@ -1,0 +1,41 @@
+services:
+  traefik:
+    command: >
+      --api.dashboard
+      --certificatesresolvers.civo.acme.dnschallenge.provider=civo
+      --certificatesresolvers.civo.acme.email: "mail@dbodky.me"
+      --certificateresolvers.civo.acme.storage: acme.json
+      --entrypoints.websecure.address=:443
+      --providers.docker
+      --providers.docker.exposedByDefault=false
+      --providers.file.directory=/etc/traefik
+    container_name: traefik
+    environment:
+      CIVO_POLLING_INTERVAL: "5"
+      CIVO_PROPAGATION_TIMEOUT: "60"
+      CIVO_TOKEN_FILE: /run/secrets/civo_token
+    image: traefik:v3.2.3
+    labels:
+      traefik.enable: true
+      traefik.http.routers.api.entrypoints: websecure
+      traefik.http.routers.api.rule: Host(`traefik.bodkys.house`)
+      traefik.http.routers.api.service: api@internal
+      traefik.http.routers.api.tls.certResolver: civo
+      traefik.http.routers.api.tls.domains.0.main: traefik.bodkys.house
+    networks:
+      - traefik
+    ports:
+      - 443:443
+    restart: unless-stopped
+    secrets:
+      - civo_token
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./config:/etc/traefik
+
+networks:
+  traefik: {}
+
+secrets:
+  civo_token:
+    environment: PORTAINER_CIVO_TOKEN

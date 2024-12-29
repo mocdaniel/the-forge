@@ -1,0 +1,13 @@
+---
+docker:
+  hosts:
+    argus:
+      ansible_host: 192.168.1.3
+homelab:
+  hosts:
+    argus:
+      ansible_host: 192.168.1.3
+raspis:
+   hosts:
+     argus:
+       ansible_host: 192.168.1.3
