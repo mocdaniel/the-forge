@@ -2,7 +2,6 @@ services:
   traefik:
     command: >
       --api.dashboard
-      --certificatesresolvers.civo.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
       --certificatesresolvers.civo.acme.dnschallenge.provider=civo
       --certificatesresolvers.civo.acme.email="mail@dbodky.me"
       --certificatesresolvers.civo.acme.storage=acme.json
