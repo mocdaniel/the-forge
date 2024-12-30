@@ -12,6 +12,7 @@ services:
       MQTT_HOST: mosquitto
     image: teslamate/teslamate:latest
     labels:
+      traefik.docker.network: traefik_traefik
       traefik.enable: true
       traefik.http.routers.teslamate.entrypoints: websecure
       traefik.http.routers.teslamate.rule: Host(`teslamate.bodkys.house`)
@@ -46,6 +47,7 @@ services:
       DATABASE_HOST: postgres
     image: teslamate/grafana:latest
     labels:
+      traefik.docker.network: traefik_traefik
       traefik.enable: true
       traefik.http.routers.teslagrafana.entrypoints: websecure
       traefik.http.routers.teslagrafana.rule: Host(`teslagrafana.bodkys.house`)

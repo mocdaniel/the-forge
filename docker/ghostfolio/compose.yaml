@@ -9,6 +9,7 @@ services:
       NODE_ENV: production
       REDIS_HOST: redis
     labels:
+      traefik.docker.network: traefik_traefik
       traefik.enable: true
       traefik.http.routers.ghostfolio.entrypoints: websecure
       traefik.http.routers.ghostfolio.rule: Host(`ghostfolio.bodkys.house`)
