@@ -1,0 +1,83 @@
+services:
+  teslamate:
+    cap_drop:
+      - all
+    container_name: teslamate
+    environment:
+      ENCRYPTION_KEY: ${PORTAINER_TESLAMATE_ENCRYPTION_KEY}
+      DATABASE_USER: teslamate
+      DATABASE_PASS: ${PORTAINER_TESLAMATE_DATABASE_PASSWORD}
+      DATABASE_NAME: teslamate
+      DATABASE_HOST: postgres
+      MQTT_HOST: mosquitto
+    image: teslamate/teslamate:latest
+    labels:
+      traefik.enable: true
+      traefik.http.routers.teslamate.entrypoints: websecure
+      traefik.http.routers.teslamate.rule: Host(`teslamate.bodkys.house`)
+      traefik.http.routers.teslamate.service: teslamate
+      traefik.http.routers.teslamate.tls.certResolver: civo
+      traefik.http.routers.teslamate.tls.domains.0.main: teslamate.bodkys.house
+      traefik.http.services.teslamate.loadbalancer.server.port: 4000
+    networks:
+      - traefik_traefik
+      - teslamate
+    restart: unless-stopped
+
+  postgres:
+    container_name: teslamate-postgres
+    environment:
+      POSTGRES_USER: teslamate
+      POSTGRES_PASSWORD: ${PORTAINER_TESLAMATE_DATABASE_PASSWORD}
+      POSTGRES_DB: teslamate
+    image: postgres:16
+    networks:
+      - teslamate
+    restart: unless-stopped
+    volumes:
+      - teslamate_postgres:/var/lib/postgresql/data
+
+  grafana:
+    container_name: teslamate-grafana
+    environment:
+      DATABASE_USER: teslamate
+      DATABASE_PASS: ${PORTAINER_TESLAMATE_DATABASE_PASSWORD}
+      DATABASE_NAME: teslamate
+      DATABASE_HOST: postgres
+    image: teslamate/grafana:latest
+    labels:
+      traefik.enable: true
+      traefik.http.routers.teslagrafana.entrypoints: websecure
+      traefik.http.routers.teslagrafana.rule: Host(`teslagrafana.bodkys.house`)
+      traefik.http.routers.teslagrafana.service: teslagrafana
+      traefik.http.routers.teslagrafana.tls.certResolver: civo
+      traefik.http.routers.teslagrafana.tls.domains.0.main: teslagrafana.bodkys.house
+      traefik.http.services.teslagrafana.loadbalancer.server.port: 3000
+    restart: unless-stopped
+    networks:
+      - traefik_traefik
+      - teslamate
+    volumes:
+      - teslamate_grafana:/var/lib/grafana
+
+  mosquitto:
+    command: mosquitto -c /mosquitto-no-auth.conf
+    container_name: teslamate-mosquitto
+    image: eclipse-mosquitto:2
+    networks:
+      - teslamate
+    restart: unless-stopped
+    volumes:
+      - teslamate_mosquitto_conf:/mosquitto/config
+      - teslamate_mosquitto_data:/mosquitto/data
+
+networks:
+  traefik_traefik:
+    external: true
+  teslamate: {}
+
+volumes:
+  teslamate_grafana: {}
+  teslamate_mosquitto_conf: {}
+  teslamate_mosquitto_data: {}
+  teslamate_postgres: {}
