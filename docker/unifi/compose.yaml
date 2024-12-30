@@ -1,0 +1,59 @@
+services:
+  unifi:
+    container_name: unifi
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Etc/UTC
+      MONGO_USER: unifi
+      MONGO_PASS: ${PORTAINER_UNIFI_MONGO_PASSWORD}
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      MONGO_DBNAME: unifi
+      MONGO_AUTHSOURCE: admin
+    image: lscr.io/linuxserver/unifi-network-application:8.6.9-ls73
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.unifi.entrypoints: websecure
+      traefik.http.routers.unifi.rule: Host(`unifi.bodkys.house`)
+      traefik.http.routers.unifi.service: unifi
+      traefik.http.routers.unifi.tls.certResolver: civo
+      traefik.http.routers.unifi.tls.domains.0.main: unifi.bodkys.house
+      traefik.http.services.unifi.loadbalancer.server.port: 8443
+    networks:
+      - traefik_traefik
+      - unifi
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+    restart: unless-stopped
+    volumes:
+      - unifi_data:/config
+
+  mongodb:
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${PORTAINER_UNIFI_MONGO_ROOT_PASSWORD}
+      MONGO_USER: unifi
+      MONGO_PASS: ${PORTAINER_UNIFI_MONGO_PASSWORD}
+      MONGO_DBNAME: unifi
+      MONGO_AUTHSOURCE: admin
+    image: mongo:4.4.18
+    networks:
+      - unifi
+    restart: unless-stopped
+    volumes:
+      - unifi_mongodb_data:/data/db
+
+networks:
+  traefik_traefik:
+    external: true
+  unifi: {}
+
+volumes:
+  unifi_data: {}
+  unifi_mongodb_data: {}
