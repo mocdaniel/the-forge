@@ -1,0 +1,95 @@
+---
+services:
+  postgres:
+    container_name: authentik-postgres
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: ${PORTAINER_AUTHENTIK_POSTGRES_PASSWORD}
+      POSTGRES_USER: authentik
+      POSTGRES_DB: authentik
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test: ["CMD-SHELL", "pg_isready -d authentik -U authentik"]
+      timeout: 5s
+    networks:
+      - authentik
+    restart: unless-stopped
+    volumes:
+      - authentik_postgres:/var/lib/postgresql/data
+
+  redis:
+    command: --save 60 1 --loglevel warning
+    container_name: authentik-redis
+    image: redis:alpine3.20
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      timeout: 3s
+    networks:
+      - authentik
+    restart: unless-stopped
+    volumes:
+      - authentik_redis:/data
+
+  authentik:
+    command: server
+    container_name: authentik
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgres
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PORTAINER_AUTHENTIK_POSTGRES_PASSWORD}
+      AUTHENTIK_SECRET_KEY: ${PORTAINER_AUTHENTIK_SECRET_KEY}
+    image: ghcr.io/goauthentik/server:2024.12.1
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.authentik.entrypoints: websecure
+      traefik.http.routers.authentik.rule: Host(`id.bodkys.house`)
+      traefik.http.routers.authentik.service: authentik
+      traefik.http.routers.authentik.tls.certResolver: civo
+      traefik.http.routers.authentik.tls.domains.0.main: id.bodkys.house
+      traefik.http.services.authentik.loadbalancer.server.port: 9000
+    networks:
+      - traefik_traefik
+      - authentik
+    restart: unless-stopped
+
+  worker:
+    command: worker
+    container_name: authentik-worker
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgres
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PORTAINER_AUTHENTIK_POSTGRES_PASSWORD}
+      AUTHENTIK_SECRET_KEY: ${PORTAINER_AUTHENTIK_SECRET_KEY}
+    image: ghcr.io/goauthentik/server:2024.12.1
+    networks:
+      - authentik
+    restart: unless-stopped
+
+networks:
+  traefik_traefik:
+    external: true
+  authentik: {}
+
+volumes:
+  authentik_postgres: {}
+  authentik_redis: {}
