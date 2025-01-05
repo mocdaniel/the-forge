@@ -10,7 +10,7 @@ services:
       DATABASE_NAME: teslamate
       DATABASE_HOST: postgres
       MQTT_HOST: mosquitto
-    image: teslamate/teslamate:v1.32.0
+    image: teslamate/teslamate:1.32.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
@@ -20,7 +20,7 @@ services:
       traefik.http.routers.teslamate.tls.certResolver: civo
       traefik.http.routers.teslamate.tls.domains.0.main: teslamate.bodkys.house
       traefik.http.services.teslamate.loadbalancer.server.port: 4000
-      wud.tag.include: ^v\d+\.\d+\.\d+$$
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
       - teslamate
@@ -48,7 +48,7 @@ services:
       DATABASE_PASS: ${PORTAINER_TESLAMATE_DATABASE_PASSWORD}
       DATABASE_NAME: teslamate
       DATABASE_HOST: postgres
-    image: teslamate/grafana:v1.32.0
+    image: teslamate/grafana:1.32.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
@@ -58,7 +58,7 @@ services:
       traefik.http.routers.teslagrafana.tls.certResolver: civo
       traefik.http.routers.teslagrafana.tls.domains.0.main: teslagrafana.bodkys.house
       traefik.http.services.teslagrafana.loadbalancer.server.port: 3000
-      wud.tag.include: ^v\d+\.\d+\.\d+$$
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     restart: unless-stopped
     networks:
       - traefik_traefik
