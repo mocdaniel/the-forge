@@ -43,7 +43,7 @@ services:
       MONGO_AUTHSOURCE: admin
     image: mongo:4.4.18
     labels:
-      wud.tag.include: ^4\.\d+\.\d+$$
+      wud.watch: false
     networks:
       - unifi
     restart: unless-stopped
