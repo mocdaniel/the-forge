@@ -22,6 +22,7 @@ services:
       traefik.http.routers.api.service: api@internal
       traefik.http.routers.api.tls.certResolver: civo
       traefik.http.routers.api.tls.domains.0.main: traefik.bodkys.house
+      wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
       - traefik
     ports:

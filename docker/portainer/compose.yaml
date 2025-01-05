@@ -10,6 +10,7 @@ services:
       traefik.http.routers.portainer.tls.certResolver: civo
       traefik.http.routers.portainer.tls.domains.0.main: portainer.bodkys.house
       traefik.http.services.portainer.loadbalancer.server.port: 9000
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
     ports:

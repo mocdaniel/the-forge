@@ -13,6 +13,8 @@ services:
       start_period: 20s
       test: ["CMD-SHELL", "pg_isready -d authentik -U authentik"]
       timeout: 5s
+    labels:
+      wud.tag.include: ^16\.\d+\.\d+$$
     networks:
       - authentik
     restart: unless-stopped
@@ -29,6 +31,8 @@ services:
       start_period: 20s
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       timeout: 3s
+    labels:
+      wud.tag.include: ^alpine\d+\.\d+$$
     networks:
       - authentik
     restart: unless-stopped
@@ -60,6 +64,7 @@ services:
       traefik.http.routers.authentik.tls.certResolver: civo
       traefik.http.routers.authentik.tls.domains.0.main: id.bodkys.house
       traefik.http.services.authentik.loadbalancer.server.port: 9000
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
       - authentik
@@ -81,6 +86,8 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PORTAINER_AUTHENTIK_POSTGRES_PASSWORD}
       AUTHENTIK_SECRET_KEY: ${PORTAINER_AUTHENTIK_SECRET_KEY}
     image: ghcr.io/goauthentik/server:2024.12.1
+    labels:
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - authentik
     restart: unless-stopped
