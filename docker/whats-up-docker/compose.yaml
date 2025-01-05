@@ -6,6 +6,11 @@ services:
       WUD_AUTH_OIDC_AUTHENTIK_CLIENTID: ${PORTAINER_WUD_CLIENT_ID}
       WUD_AUTH_OIDC_AUTHENTIK_CLIENTSECRET: ${PORTAINER_WUD_CLIENT_SECRET}
       WUD_AUTH_OIDC_AUTHENTIK_DISCOVERY: https://id.bodkys.house/application/o/whats-up-docker/.well-known/openid-configuration
+      WUD_TRIGGER_DISCORD_theforge_BOTUSERNAME: What's Up Docker
+      WUD_TRIGGER_DISCORD_theforge_CARDCOLOR: 45986
+      WUD_TRIGGER_DISCORD_theforge_CARDLABEL: Containers can be updated
+      WUD_TRIGGER_DISCORD_theforge_MODE: batch
+      WUD_TRIGGER_DISCORD_theforge_URL: ${PORTAINER_WUD_DISCORD_URL}
       WUD_WATCHER_olympus_SOCKET: /var/run/docker.sock
       WUD_WATCHER_pandora_HOST: pandora
     image: getwud/wud:7.2.0
@@ -18,6 +23,7 @@ services:
       traefik.http.routers.wud.tls.certResolver: civo
       traefik.http.routers.wud.tls.domains.0.main: wud.bodkys.house
       traefik.http.services.wud.loadbalancer.server.port: 3000
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
     restart: unless-stopped
