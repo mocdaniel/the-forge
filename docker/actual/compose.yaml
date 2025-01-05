@@ -10,6 +10,7 @@ services:
       traefik.http.routers.actual.tls.certResolver: civo
       traefik.http.routers.actual.tls.domains.0.main: actual.bodkys.house
       traefik.http.services.actual.loadbalancer.server.port: 5006
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
     restart: unless-stopped

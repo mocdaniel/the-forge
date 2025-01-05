@@ -17,6 +17,7 @@ services:
       traefik.http.routers.ghostfolio.tls.certResolver: civo
       traefik.http.routers.ghostfolio.tls.domains.0.main: ghostfolio.bodkys.house
       traefik.http.services.ghostfolio.loadbalancer.server.port: 3333
+      wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
       - ghostfolio
@@ -24,11 +25,13 @@ services:
 
   postgres:
     container_name: ghostfolio-postgres
-    image: postgres:16.6
     environment:
       POSTGRES_DB: ghostfolio
       POSTGRES_PASSWORD: ${PORTAINER_POSTGRES_PASSWORD}
       POSTGRES_USER: ghostfolio
+    image: postgres:16.6
+    labels:
+      wud.tag.include: ^16\.\d+\.\d+$$
     networks:
       - ghostfolio
     restart: unless-stopped
@@ -38,6 +41,8 @@ services:
   redis:
     container_name: ghostfolio-redis
     image: redis:alpine3.20
+    labels:
+      wud.tag.include: ^alpine\d+\.\d+$$
     networks:
       - ghostfolio
     restart: unless-stopped
