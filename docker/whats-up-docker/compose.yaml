@@ -1,0 +1,29 @@
+services:
+  whatsupdocker:
+    container_name: whats-up-docker
+    environment:
+      TZ: Europe/Berlin
+      WUD_AUTH_OIDC_AUTHENTIK_CLIENTID: ${PORTAINER_WUD_CLIENT_ID}
+      WUD_AUTH_OIDC_AUTHENTIK_CLIENTSECRET: ${PORTAINER_WUD_CLIENT_SECRET}
+      WUD_AUTH_OIDC_AUTHENTIK_DISCOVERY: https://id.bodkys.house/application/o/whats-up-docker/.well-known/openid-configuration
+      WUD_WATCHER_olympus_SOCKET: /var/run/docker.sock
+      WUD_WATCHER_pandora_HOST: pandora
+    image: getwud/wud:7.2.0
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.wud.entrypoints: websecure
+      traefik.http.routers.wud.rule: Host(`wud.bodkys.house`)
+      traefik.http.routers.wud.service: wud
+      traefik.http.routers.wud.tls.certResolver: civo
+      traefik.http.routers.wud.tls.domains.0.main: wud.bodkys.house
+      traefik.http.services.wud.loadbalancer.server.port: 3000
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  traefik_traefik:
+    external: true
