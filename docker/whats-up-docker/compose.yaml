@@ -6,8 +6,6 @@ services:
       WUD_AUTH_OIDC_AUTHENTIK_CLIENTID: ${PORTAINER_WUD_CLIENT_ID}
       WUD_AUTH_OIDC_AUTHENTIK_CLIENTSECRET: ${PORTAINER_WUD_CLIENT_SECRET}
       WUD_AUTH_OIDC_AUTHENTIK_DISCOVERY: https://id.bodkys.house/application/o/whats-up-docker/.well-known/openid-configuration
-      WUD_REGISTRY_LSCR_TOKEN: ${PORTAINER_WUD_LSCR_PAT}
-      WUD_REGISTRY_LSCR_USERNAME: mocdaniel
       WUD_TRIGGER_DISCORD_theforge_BOTUSERNAME: What's Up Docker
       WUD_TRIGGER_DISCORD_theforge_CARDCOLOR: 45986
       WUD_TRIGGER_DISCORD_theforge_CARDLABEL: Containers can be updated
