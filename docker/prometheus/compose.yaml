@@ -1,0 +1,26 @@
+services:
+  prometheus:
+    container_name: prometheus
+    environment:
+      GRAFANA_CLOUD_USERNAME: ${PORTAINER_GRAFANA_CLOUD_USERNAME}
+      GRAFANA_CLOUD_PASSWORD: ${PORTAINER_GRAFANA_CLOUD_PASSWORD}
+    image: prom/prometheus:v3.1.0
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.prometheus.entrypoints: websecure
+      traefik.http.routers.prometheus.rule: Host(`prometheus.bodkys.house`)
+      traefik.http.routers.prometheus.service: prometheus
+      traefik.http.routers.prometheus.tls.certResolver: civo
+      traefik.http.routers.prometheus.tls.domains.0.main: prometheus.bodkys.house
+      traefik.http.services.prometheus.loadbalancer.server.port: 9090
+      wud.tag.include: ^v\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+
+networks:
+  traefik_traefik:
+    external: true
