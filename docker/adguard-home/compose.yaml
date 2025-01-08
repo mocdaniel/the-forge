@@ -14,7 +14,7 @@ services:
     networks:
       - traefik_traefik
     ports:
-      - 192.168.1.3:53:53/udp # https://stackoverflow.com/questions/64007727/docker-compose-internal-dns-server-127-0-0-11-connection-refused
+      - 53:53/udp
     restart: always
     volumes:
       - adguard_workdir:/opt/adguardhome/work

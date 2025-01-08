@@ -19,7 +19,7 @@ services:
       - traefik_traefik
     restart: unless-stopped
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
 networks:
   traefik_traefik:
