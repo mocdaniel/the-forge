@@ -1,9 +1,6 @@
 services:
   prometheus:
     container_name: prometheus
-    environment:
-      GRAFANA_CLOUD_USERNAME: ${PORTAINER_GRAFANA_CLOUD_USERNAME}
-      GRAFANA_CLOUD_PASSWORD: ${PORTAINER_GRAFANA_CLOUD_PASSWORD}
     image: prom/prometheus:v3.1.0
     labels:
       traefik.docker.network: traefik_traefik
@@ -18,9 +15,18 @@ services:
     networks:
       - traefik_traefik
     restart: unless-stopped
+    secrets:
+      - grafana_password
+      - grafana_username
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
 networks:
   traefik_traefik:
     external: true
+
+secrets:
+  grafana_password:
+    environment: PORTAINER_GRAFANA_CLOUD_PASSWORD
+  grafana_username:
+    environment: PORTAINER_GRAFANA_CLOUD_USERNAME
