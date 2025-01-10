@@ -5,7 +5,17 @@ remote_write:
     basic_auth:
       username_file: /run/secrets/grafana_username 
       password_file: /run/secrets/grafana_password
+    name: Grafana Cloud
 scrape_configs:
   - job_name: prometheus
     static_configs:
       - targets: ["localhost:9090"]
+  - job_name: whats-up-docker
+    scheme: https
+    static_configs:
+      - targets: ["wud.bodkys.house"]
+    metric_relabel_configs:
+      - source_labels:
+          - __name__
+        regex: "wud_.*"
+        action: keep
