@@ -12,6 +12,10 @@ scrape_configs:
       - targets: ["localhost:9090"]
   - job_name: whats-up-docker
     scheme: https
+    oauth2:
+      client_id: 84X6Jkgwwt0gotFpKFEY6ws95Ehig9kpUZUiJJ5Q
+      client_secret_file: /run/secrets/oauth_secret
+      token_url: https://id.bodkys.house/application/o/token/
     static_configs:
       - targets: ["wud.bodkys.house"]
     metric_relabel_configs:

@@ -18,6 +18,7 @@ services:
     secrets:
       - grafana_password
       - grafana_username
+      - oauth_secret
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
@@ -30,3 +31,5 @@ secrets:
     environment: PORTAINER_GRAFANA_CLOUD_PASSWORD
   grafana_username:
     environment: PORTAINER_GRAFANA_CLOUD_USERNAME
+  oauth_secret:
+    environment: PORTAINER_OAUTH_SECRET
