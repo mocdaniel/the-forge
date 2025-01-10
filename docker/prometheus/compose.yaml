@@ -1,5 +1,6 @@
 services:
   prometheus:
+    command: ['--log.level=debug', '--config.file=/etc/prometheus/prometheus.yml']
     container_name: prometheus
     image: prom/prometheus:v3.1.0
     labels:

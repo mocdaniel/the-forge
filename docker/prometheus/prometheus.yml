@@ -15,6 +15,9 @@ scrape_configs:
     oauth2:
       client_id: 84X6Jkgwwt0gotFpKFEY6ws95Ehig9kpUZUiJJ5Q
       client_secret_file: /run/secrets/oauth_secret
+      endpoint_params:
+        grant_type: client_credentials    
+        scope: openid profile email
       token_url: https://id.bodkys.house/application/o/token/
     static_configs:
       - targets: ["wud.bodkys.house"]
