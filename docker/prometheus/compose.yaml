@@ -6,12 +6,12 @@ services:
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
-      traefik.http.routers.prometheus.entrypoints: websecure
-      traefik.http.routers.prometheus.rule: Host(`prometheus.bodkys.house`)
-      traefik.http.routers.prometheus.service: prometheus
-      traefik.http.routers.prometheus.tls.certResolver: civo
-      traefik.http.routers.prometheus.tls.domains.0.main: prometheus.bodkys.house
-      traefik.http.services.prometheus.loadbalancer.server.port: 9090
+      traefik.http.routers.prometheus-svc.entrypoints: websecure
+      traefik.http.routers.prometheus-svc.rule: Host(`prometheus.bodkys.house`)
+      traefik.http.routers.prometheus-svc.service: prometheus-svc
+      traefik.http.routers.prometheus-svc.tls.certResolver: civo
+      traefik.http.routers.prometheus-svc.tls.domains.0.main: prometheus.bodkys.house
+      traefik.http.services.prometheus-svc.loadbalancer.server.port: 9090
       wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
