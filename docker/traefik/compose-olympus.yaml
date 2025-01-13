@@ -6,6 +6,7 @@ services:
       --certificatesresolvers.civo.acme.email="mail@dbodky.me"
       --certificatesresolvers.civo.acme.storage=/acme/acme.json
       --entrypoints.websecure.address=:443
+      --metrics.prometheus.entrypoint="websecure"
       --providers.docker
       --providers.docker.exposedByDefault=false
       --serverstransport.insecureskipverify=true
