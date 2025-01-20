@@ -10,6 +10,7 @@ services:
       WUD_TRIGGER_DISCORD_theforge_CARDCOLOR: 45986
       WUD_TRIGGER_DISCORD_theforge_CARDLABEL: Containers can be updated
       WUD_TRIGGER_DISCORD_theforge_MODE: batch
+      WUD_TRIGGER_DISCORD_theforge_ONCE: false
       WUD_TRIGGER_DISCORD_theforge_URL: ${PORTAINER_WUD_DISCORD_URL}
       WUD_WATCHER_olympus_SOCKET: /var/run/docker.sock
       WUD_WATCHER_pandora_HOST: pandora
