@@ -14,7 +14,7 @@ services:
       WUD_TRIGGER_DISCORD_theforge_URL: ${PORTAINER_WUD_DISCORD_URL}
       WUD_WATCHER_olympus_SOCKET: /var/run/docker.sock
       WUD_WATCHER_pandora_HOST: pandora
-    image: getwud/wud:8.0.0
+    image: getwud/wud:8.0.1
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
