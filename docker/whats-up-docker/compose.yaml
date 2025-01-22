@@ -24,6 +24,7 @@ services:
       traefik.http.routers.wud.tls.certResolver: civo
       traefik.http.routers.wud.tls.domains.0.main: wud.bodkys.house
       traefik.http.services.wud.loadbalancer.server.port: 3000
+      wud.link.template: https://github.com/getwud/wud/releases/tag/$${transformed}
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
