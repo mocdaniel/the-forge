@@ -17,6 +17,7 @@ services:
       traefik.http.routers.ghostfolio.tls.certResolver: civo
       traefik.http.routers.ghostfolio.tls.domains.0.main: ghostfolio.bodkys.house
       traefik.http.services.ghostfolio.loadbalancer.server.port: 3333
+      wud.link.template: https://github.com/ghostfolio/ghostfolio/release/tags/$${transformed}
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
