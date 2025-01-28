@@ -12,6 +12,7 @@ services:
       traefik.http.routers.prometheus-svc.tls.certResolver: civo
       traefik.http.routers.prometheus-svc.tls.domains.0.main: prometheus.bodkys.house
       traefik.http.services.prometheus-svc.loadbalancer.server.port: 9090
+      wud.link.template: https://github.com/prometheus/prometheus/releases/tag/$${transformed}
       wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik

@@ -22,6 +22,7 @@ services:
       traefik.http.routers.unifi.tls.domains.0.main: unifi.bodkys.house
       traefik.http.services.unifi.loadbalancer.server.scheme: https
       traefik.http.services.unifi.loadbalancer.server.port: 8443
+      wud.link.template: https://github.com/linuxserver/docker-unifi-network-application/releases/tag/$${transformed}
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik

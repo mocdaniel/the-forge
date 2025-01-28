@@ -29,6 +29,7 @@ services:
       traefik.http.routers.prometheus.service: prometheus@internal
       traefik.http.routers.prometheus.tls.certResolver: civo
       traefik.http.routers.prometheus.tls.domains.0.main: traefik.bodkys.house
+      wud.link.template: https://github.com/traefik/traefik/releases/tag/$${transformed}
       wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
       - traefik

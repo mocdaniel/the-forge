@@ -64,6 +64,7 @@ services:
       traefik.http.routers.authentik.tls.certResolver: civo
       traefik.http.routers.authentik.tls.domains.0.main: id.bodkys.house
       traefik.http.services.authentik.loadbalancer.server.port: 9000
+      wud.link.template: https://github.com/goauthentik/authentik/releases/tag/version%2F$${transformed}
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik

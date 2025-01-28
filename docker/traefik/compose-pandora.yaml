@@ -21,6 +21,7 @@ services:
       traefik.http.routers.api.service: api@internal
       traefik.http.routers.api.tls.certResolver: civo
       traefik.http.routers.api.tls.domains.0.main: traefik-pandora.bodkys.house
+      wud.link.template: https://github.com/traefik/traefik/releases/tag/$${transformed}
       wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
       - traefik
