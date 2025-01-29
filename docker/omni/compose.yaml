@@ -2,7 +2,7 @@ name: omni
 services:
   omni:
     command: >
-      --account-id=$${PORTAINER_OMNI_ACCOUNT_UUID}
+      --account-id=${PORTAINER_OMNI_ACCOUNT_UUID}
       --advertised-api-url=https://omni.bodkys.house/
       --advertised-kubernetes-proxy-url=https://kube.omni.bodkys.house/
       --auth-saml-enabled=true
@@ -11,7 +11,7 @@ services:
       --k8s-proxy-bind-addr=127.0.0.1:8100
       --machine-api-bind-addr=127.0.0.1:8090
       --name=Omni
-      --private-key-source=/etcd_key/omni.asc
+      --private-key-source='file:///run/secrets/omni_private_key'
       --siderolink-api-advertised-url=https://api.omni.bodkys.house:443/
       --siderolink-use-grpc-tunnel=true
     container_name: omni
@@ -42,13 +42,17 @@ services:
     networks:
       - traefik
     restart: unless-stopped
+    secrets:
+      - omni_private_key
     volumes:
       - omni_etcd:/_out/etcd
-      - omni_private_key:/etcd_key
 
 networks:
   traefik: {}
 
+secrets:
+  omni_private_key:
+    environment: PORTAINER_OMNI_PRIVATE_KEY
+
 volumes:
   omni_etcd: {}
-  omni_private_key: {}
