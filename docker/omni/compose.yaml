@@ -9,6 +9,7 @@ services:
       --advertised-kubernetes-proxy-url=https://kube.omni.bodkys.house/
       --auth-saml-enabled=true
       --auth-saml-url=https://id.bodkys.house/api/v3/providers/saml/6/metadata/?download
+      --enable-break-glass-configs=true
       --initial-users='mail@dbodky.me'
       --name=Omni
       --private-key-source='file:///etcd_key/omni.asc'
