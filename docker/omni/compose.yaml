@@ -16,7 +16,7 @@ services:
       --siderolink-api-advertised-url=https://api.omni.bodkys.house:443/
       --siderolink-use-grpc-tunnel=true
     container_name: omni
-    image: "ghcr.io/siderolabs/omni:v0.46.1"
+    image: "ghcr.io/siderolabs/omni:v0.46.2"
     devices:
       - /dev/net/tun
     labels:
