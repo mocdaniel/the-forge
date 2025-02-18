@@ -2,7 +2,7 @@ services:
   prometheus:
     command: ['--log.level=debug', '--config.file=/etc/prometheus/prometheus.yml']
     container_name: prometheus
-    image: prom/prometheus:v3.1.0
+    image: prom/prometheus:v3.2.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
