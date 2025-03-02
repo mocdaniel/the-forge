@@ -2,7 +2,7 @@ services:
   minecraft:
     environment:
       CF_API_KEY: ${PORTAINER_CURSEFORGE_API_KEY}
-      CF_PAGE_URL: https://www.curseforge.com/api/v1/mods/876781/files/5854101
+      CF_PAGE_URL: https://www.curseforge.com/minecraft/modpacks/better-mc-forge-bmc4
       ENABLE_ROLLING_LOGS: "true"
       EULA: "true"
       LEVEL: "better-mc"
