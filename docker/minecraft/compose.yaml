@@ -9,6 +9,8 @@ services:
       LOG_TIMESTAMP: "true"
       MEMORY: 8G
       MOTD: "Willkommen zu BetterMC :)"
+      OPS: |-
+        Trix213
       PLAYER_IDLE_TIMEOUT: "10"
       RCON_CMDS_FIRST_CONNECT: |-
         pregen stop
