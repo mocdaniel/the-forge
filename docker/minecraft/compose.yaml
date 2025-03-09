@@ -17,7 +17,7 @@ services:
         gamerule doFireTick true
       RCON_CMDS_STARTUP: |-
         pregen start 200
-      TYPE: PAPER
+      TYPE: FABRIC
       VIEW_DISTANCE: "20"
     image: itzg/minecraft-server:java21
     ports:
