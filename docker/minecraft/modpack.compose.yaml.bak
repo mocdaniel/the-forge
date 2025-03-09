@@ -1,11 +1,14 @@
 services:
   minecraft:
     environment:
+      CF_API_KEY: ${PORTAINER_CURSEFORGE_API_KEY}
+      CF_PAGE_URL: https://www.curseforge.com/minecraft/modpacks/better-mc-forge-bmc4
       ENABLE_ROLLING_LOGS: "true"
       EULA: "true"
-      LEVEL: "server-world"
+      LEVEL: "better-mc"
       LOG_TIMESTAMP: "true"
-      MEMORY: 6G
+      MEMORY: 8G
+      MOTD: "Willkommen zu BetterMC :)"
       OPS: |-
         Trix213
       PLAYER_IDLE_TIMEOUT: "10"
@@ -17,7 +20,7 @@ services:
         gamerule doFireTick true
       RCON_CMDS_STARTUP: |-
         pregen start 200
-      TYPE: PAPER
+      TYPE: AUTO_CURSEFORGE
       VIEW_DISTANCE: "20"
     image: itzg/minecraft-server:java21
     ports:
@@ -25,7 +28,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - vanilla-data:/data
+      - data:/data
 
 volumes:
-  vanilla-data: {}
+  data: {}
