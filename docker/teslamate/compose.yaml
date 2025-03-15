@@ -70,7 +70,7 @@ services:
   mosquitto:
     command: mosquitto -c /mosquitto-no-auth.conf
     container_name: teslamate-mosquitto
-    image: eclipse-mosquitto:2.0.20
+    image: eclipse-mosquitto:2.0.21
     labels:
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
