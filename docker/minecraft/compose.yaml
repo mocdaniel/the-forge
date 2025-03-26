@@ -2,16 +2,23 @@ services:
   minecraft:
     environment:
       ENABLE_ROLLING_LOGS: "true"
+      ENABLE_WHITELIST: "true"
       EULA: "true"
       LEVEL: "server-world"
       LOG_TIMESTAMP: "true"
       MEMORY: 6G
       OPS: |-
+        DieFaule
+        KanonenGurke
+        Tobiwan_99
         Trix213
+        Snegge5
+        pfief
       PLAYER_IDLE_TIMEOUT: "10"
       TYPE: FORGE
       VERSION: 1.20.1
       VIEW_DISTANCE: "20"
+      WHITELIST: "DieFaule,KanonenGurke,Tobiwan_99,Trix213,Snegge5,pfief"
     image: itzg/minecraft-server:java21
     ports:
       - 25565:25565
