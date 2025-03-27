@@ -6,7 +6,7 @@ services:
       EULA: "true"
       LEVEL: "server-world"
       LOG_TIMESTAMP: "true"
-      MEMORY: 8G
+      MEMORY: 10G
       OPS: |-
         Cooksalt
         Honigmond27
