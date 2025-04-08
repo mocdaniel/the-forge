@@ -8,6 +8,7 @@ services:
       LOG_TIMESTAMP: "true"
       MEMORY: 10G
       OPS: |-
+        SirPigley
         DeltaP
         IDomDomI
         Cooksalt
@@ -22,7 +23,7 @@ services:
       TYPE: FORGE
       VERSION: 1.20.1
       VIEW_DISTANCE: "20"
-      WHITELIST: "DeltaP,IDomDomI,Cooksalt,Honigmond27,DieFaule,KanonenGurke,Tobiwan_99,Trix213,Snegge5,pfief"
+      WHITELIST: "SirPigley,DeltaP,IDomDomI,Cooksalt,Honigmond27,DieFaule,KanonenGurke,Tobiwan_99,Trix213,Snegge5,pfief"
     image: itzg/minecraft-server:java21
     ports:
       - 25565:25565
