@@ -20,7 +20,7 @@ services:
       traefik.http.routers.teslamate.tls.certResolver: civo
       traefik.http.routers.teslamate.tls.domains.0.main: teslamate.bodkys.house
       traefik.http.services.teslamate.loadbalancer.server.port: 4000
-      wud.link.template: https://github.com/teslamate-org/teslamate/releases/tag/v${{transformed}}
+      wud.link.template: https://github.com/teslamate-org/teslamate/releases/tag/v$${{transformed}}
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
