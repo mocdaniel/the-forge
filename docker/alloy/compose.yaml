@@ -1,0 +1,36 @@
+services:
+  alloy:
+    command: >
+      run --server.http.listen-addr=0.0.0.0:12345
+      --storage.path=/var/lib/alloy/data
+      /etc/alloy/config.alloy
+    container_name: alloy
+    environment:
+      GCLOUD_RW_API_KEY: ${PORTAINER_GCLOUD_RW_API_KEY}
+      GCLOUD_FM_COLLECTOR_ID: ${PORTAINER_HOST}.bodkys.house
+    hostname: ${PORTAINER_HOST}.bodkys.house
+    image: grafana/alloy:v1.8.1
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.alloy.entrypoints: websecure
+      traefik.http.routers.alloy.rule: Host(`alloy-${PORTAINER_HOST}.bodkys.house`)
+      traefik.http.routers.alloy.service: alloy
+      traefik.http.routers.alloy.tls.certResolver: civo
+      traefik.http.routers.alloy.tls.domains.0.main: alloy-${PORTAINER_HOST}.bodkys.house
+      traefik.http.services.alloy.loadbalancer.server.port: 12345
+      wud.link.template: https://github.com/grafana/alloy/releases/tag/$${transformed}
+      wud.tag.include: ^v\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - /etc/alloy/config.alloy:/etc/alloy/config.alloy
+      - alloy-data:/var/lib/alloy/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+networks:
+  traefik_traefik:
+    external: true
+
+volumes:
+  alloy-data: {}
