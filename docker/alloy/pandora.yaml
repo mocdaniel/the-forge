@@ -1,13 +1,13 @@
 services:
   alloy-proxy:
-    command: tcp-listen:12345,fork,resueaddr tcp:host.docker.internal:12345
+    command: tcp-listen:12345,fork,reuseaddr tcp:host.docker.internal:12345
     container_name: alloy-proxy
     image: alpine/socat
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
       traefik.http.routers.alloy-proxy.rule: Host(`alloy-pandora.bodkys.house`)
-      traefik.http.routers.alloy-proxy.entrypoint: websecure
+      traefik.http.routers.alloy-proxy.entrypoints: websecure
       traefik.http.routers.alloy-proxy.service: alloy-proxy
       traefik.http.routers.alloy-proxy.tls.certResolver: civo
       traefik.http.routers.alloy-proxy.tls.domains.0.main: alloy-pandora.bodkys.house
