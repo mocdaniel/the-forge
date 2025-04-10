@@ -6,7 +6,9 @@ services:
       --certificatesresolvers.civo.acme.email="mail@dbodky.me"
       --certificatesresolvers.civo.acme.storage=/acme/acme.json
       --entrypoints.websecure.address=:443
+      --entrypoints.traefik.address=:8080
       --metrics.prometheus=true
+      --metrics.prometheus.addServicesLabels=true
       --providers.docker
       --providers.docker.exposedByDefault=false
     container_name: traefik
