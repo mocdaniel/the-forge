@@ -6,8 +6,9 @@ services:
       --certificatesresolvers.civo.acme.email="mail@dbodky.me"
       --certificatesresolvers.civo.acme.storage=/acme/acme.json
       --entrypoints.websecure.address=:443
-      --metrics.prometheus.entrypoint="websecure"
-      --metrics.prometheus.manualRouting=true
+      --entrypoints.traefik.address=:8080
+      --metrics.prometheus=true
+      --metrics.prometheus.addServicesLabels=true
       --providers.docker
       --providers.docker.exposedByDefault=false
       --serverstransport.insecureskipverify=true
@@ -24,11 +25,6 @@ services:
       traefik.http.routers.api.service: api@internal
       traefik.http.routers.api.tls.certResolver: civo
       traefik.http.routers.api.tls.domains.0.main: traefik.bodkys.house
-      traefik.http.routers.prometheus.entrypoints: websecure
-      traefik.http.routers.prometheus.rule: Host(`traefik.bodkys.house`)&&PathPrefix(`/metrics`)
-      traefik.http.routers.prometheus.service: prometheus@internal
-      traefik.http.routers.prometheus.tls.certResolver: civo
-      traefik.http.routers.prometheus.tls.domains.0.main: traefik.bodkys.house
       wud.link.template: https://github.com/traefik/traefik/releases/tag/$${transformed}
       wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
