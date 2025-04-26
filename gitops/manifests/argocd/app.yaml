@@ -1,0 +1,65 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-chart
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: argocd
+  project: argocd
+  source:
+    chart: argo-cd
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 7.8.28
+    helm:
+      releaseName: argocd
+      valuesObject:
+        configs:
+          params:
+            server.insecure: "true"
+          cm:
+            resource.exclusions: |
+              - apiGroups:
+                  - "cilium.io/v2"
+                kinds:
+                  - "Endpoint"
+                clusters:
+                  - "https://kubernetes.default.svc"
+            resource.customizations.health.argoproj.io_Application: |
+              hs = {}
+              hs.status = "Progressing"
+              hs.message = ""
+              if obj.status ~= nil then
+                if obj.status.health ~= nil then
+                  hs.status = obj.status.health.status
+                  if obj.status.health.message ~= nil then
+                    hs.message = obj.status.health.message
+                  end
+                end
+              end
+              return hs
+          repositories:
+            argo:
+              url: https://argoproj.github.io/argo-helm
+              name: argo
+              type: helm
+              project: argocd
+          secret:
+            argocdServerAdminPassword: "$2a$10$5CsSK3647KGsYW1u12XanuzjKT32wvLLomcaNsQYuH14or4BiLmy6"
+        global:
+          domain: argocd.bodkys.house
+        server:
+          ingress:
+            enabled: true
+            tls: true
+            ingressClassName: nginx
+            annotations:
+              nginx.ingress.kubernetes.io/force-ssl: "true"
+              nginx.ingress.kubernetes.io/rewrite-target: "/"
+  syncPolicy:
+    automated:
+      selfHeal: true

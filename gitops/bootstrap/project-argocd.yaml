@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  description: ArgoCD Project
+  destinations:
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  orphanedResources:
+    warn: true
+  sourceNamespaces:
+    - argocd
+  sourceRepos:
+    - https://argoproj.github.io/argo-helm
+    - https://github.com/mocdaniel/the-forge.git
