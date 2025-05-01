@@ -4,7 +4,6 @@ services:
       ENABLE_ROLLING_LOGS: "true"
       ENABLE_WHITELIST: "true"
       EULA: "true"
-      JVM_OPTS: "-Xshare:off"
       LEVEL: "server-world"
       LOG_TIMESTAMP: "true"
       MEMORY: 10G
