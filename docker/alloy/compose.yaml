@@ -8,6 +8,7 @@ services:
     environment:
       GCLOUD_RW_API_KEY: ${PORTAINER_GCLOUD_RW_API_KEY}
       GCLOUD_FM_COLLECTOR_ID: ${PORTAINER_HOST}.bodkys.house
+      WUD_OAUTH_SECRET: ${PORTAINER_WUD_OAUTH_SECRET:-notneeded}
     hostname: ${PORTAINER_HOST}.bodkys.house
     image: grafana/alloy:v1.8.1
     labels:
