@@ -1,4 +1,3 @@
---
 services:
   postgres:
     container_name: authentik-postgres
@@ -54,7 +53,7 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: authentik
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PORTAINER_AUTHENTIK_POSTGRES_PASSWORD}
       AUTHENTIK_SECRET_KEY: ${PORTAINER_AUTHENTIK_SECRET_KEY}
-    image: ghcr.io/goauthentik/server:2025.2.4
+    image: ghcr.io/goauthentik/server:2025.4.1
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
@@ -86,7 +85,7 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: authentik
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PORTAINER_AUTHENTIK_POSTGRES_PASSWORD}
       AUTHENTIK_SECRET_KEY: ${PORTAINER_AUTHENTIK_SECRET_KEY}
-    image: ghcr.io/goauthentik/server:2025.2.4
+    image: ghcr.io/goauthentik/server:2025.4.1
     labels:
       wud.tag.include: ^\d+\.\d+\.\d+$$
     networks:
