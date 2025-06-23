@@ -1,0 +1,32 @@
+services:
+  mybibliotheca:
+    container_name: mybibliotheca
+    image: pickles4evaaaa/mybibliotheca:1.1.1
+    environment:
+      SECRET_KEY: ${PORTAINER_SECRET_KEY}
+      SECURITY_PASSWORD_SALT: ${PORTAINER_SECURITY_PASSWORD_SALT}
+      TIMEZONE: Europe/Berlin
+      WORKERS: 4
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.mybibliotheca.entrypoints: websecure
+      traefik.http.routers.mybibliotheca.rule: Host(`library.bodkys.house`)
+      traefik.http.routers.mybibliotheca.service: mybibliotheca
+      traefik.http.routers.mybibliotheca.tls.certResolver: civo
+      traefik.http.routers.mybibliotheca.tls.domains.0.main: library.bodkys.house
+      traefik.http.services.mybibliotheca.loadbalancer.server.port: 5054
+      wud.link.template: https://github.com/pickles4evaaaa/mybibliotheca/releases/tag/v$${transformed}
+      wud.tag.include: ^\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - mybibliotheca_data:/app/data
+
+networks:
+  traefik_traefik:
+    external: true
+
+volumes:
+  mybibliotheca_data: {}
