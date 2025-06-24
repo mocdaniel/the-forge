@@ -33,9 +33,9 @@ services:
       POSTGRES_USER: teslamate
       POSTGRES_PASSWORD: ${PORTAINER_TESLAMATE_DATABASE_PASSWORD}
       POSTGRES_DB: teslamate
-    image: postgres:16
+    image: postgres:17
     labels:
-      wud.tag.include: ^16\.\d+\.\d+$$
+      wud.tag.include: ^17\.\d+\.\d+$$
     networks:
       - teslamate
     restart: unless-stopped
