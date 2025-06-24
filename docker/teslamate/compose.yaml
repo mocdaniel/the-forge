@@ -10,7 +10,7 @@ services:
       DATABASE_NAME: teslamate
       DATABASE_HOST: postgres
       MQTT_HOST: mosquitto
-    image: teslamate/teslamate:1.32.0
+    image: teslamate/teslamate:2.0.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
@@ -49,7 +49,7 @@ services:
       DATABASE_PASS: ${PORTAINER_TESLAMATE_DATABASE_PASSWORD}
       DATABASE_NAME: teslamate
       DATABASE_HOST: postgres
-    image: teslamate/grafana:1.32.0
+    image: teslamate/grafana:2.0.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
