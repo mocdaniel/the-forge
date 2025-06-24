@@ -6,14 +6,12 @@ services:
       WUD_AUTH_OIDC_AUTHENTIK_CLIENTID: ${PORTAINER_WUD_CLIENT_ID}
       WUD_AUTH_OIDC_AUTHENTIK_CLIENTSECRET: ${PORTAINER_WUD_CLIENT_SECRET}
       WUD_AUTH_OIDC_AUTHENTIK_DISCOVERY: https://id.bodkys.house/application/o/whats-up-docker/.well-known/openid-configuration
-      WUD_TRIGGER_DISCORD_theforge_BOTUSERNAME: What's Up Docker
-      WUD_TRIGGER_DISCORD_theforge_CARDCOLOR: 45986
-      WUD_TRIGGER_DISCORD_theforge_CARDLABEL: Containers can be updated
-      WUD_TRIGGER_DISCORD_theforge_MODE: batch
-      WUD_TRIGGER_DISCORD_theforge_ONCE: false
-      WUD_TRIGGER_DISCORD_theforge_URL: ${PORTAINER_WUD_DISCORD_URL}
       WUD_WATCHER_olympus_SOCKET: /var/run/docker.sock
-      WUD_WATCHER_pandora_HOST: pandora
+      WUD_WATCHER_pandora_HOST: pandora.bodkys.house
+      WUD_WATCHER_pandora_CAFILE: /certs/ca.pem
+      WUD_WATCHER_pandora_CERTFILE: /certs/wud.pem
+      WUD_WATCHER_pandora_KEYFILE: /certs/wud.key
+      WUD_WATCHER_pandora_PORT: 2376
     image: getwud/wud:8.0.1
     labels:
       traefik.docker.network: traefik_traefik
@@ -31,6 +29,7 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker/wud:/certs/
 
 networks:
   traefik_traefik:
