@@ -1,6 +1,10 @@
 services:
   homarr:
     container_name: homarr
+    dns:
+      - 192.168.1.3
+      - 1.1.1.1
+      - 8.8.8.8
     environment:
       ADMIN_GROUP: homarr-admins
       AUTH_DOMAIN: id.bodkys.house
