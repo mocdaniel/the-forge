@@ -1,0 +1,30 @@
+services:
+  homarr:
+    container_name: homarr
+    environment:
+      - SECRET_ENCRYPTION_KEY=${PORTAINER_ENCRYPTION_KEY}
+    image: ghcr.io/homarr-labs/homarr:v1.26.0
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.homarr.entrypoints: websecure
+      traefik.http.routers.homarr.rule: Host(`home.bodkys.house`)
+      traefik.http.routers.homarr.service: homarr
+      traefik.http.routers.homarr.tls.certResolver: civo
+      traefik.http.routers.homarr.tls.domains.0.main: home.bodkys.house
+      traefik.http.services.homarr.loadbalancer.server.port: 7575 
+      wud.link.template: https://github.com/homarr-labs/homarr/releases/tag/$${transformed}
+      wud.tag.include: ^v\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - homarr_data:/appdata
+
+networks:
+  traefik_traefik:
+    external: true
+
+volumes:
+  homarr_data: {}
