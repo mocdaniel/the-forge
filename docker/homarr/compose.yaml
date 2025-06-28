@@ -2,7 +2,26 @@ services:
   homarr:
     container_name: homarr
     environment:
-      - SECRET_ENCRYPTION_KEY=${PORTAINER_ENCRYPTION_KEY}
+      ADMIN_GROUP: homarr-admins
+      AUTH_DOMAIN: id.bodkys.house
+      AUTH_LOGOUT_REDIRECT_URL: https://id.bodkys.house/application/o/homarr/end-session/
+      AUTH_OIDC_AUTO_LOGIN: true
+      AUTH_OIDC_CLIENT_ID: ${PORTAINER_OIDC_ID}
+      AUTH_OIDC_CLIENT_NAME: authentik
+      AUTH_OIDC_CLIENT_SECRET: ${PORTAINER_OIDC_SECRET}
+      AUTH_OIDC_GROUPS_ATTRIBUTE: groups
+      AUTH_OIDC_ISSUER: https://id.bodkys.house/application/o/homarr/
+      AUTH_OIDC_SCOPE_OVERWRITE: openid email profile groups
+      AUTH_OIDC_URI: https://id.bodkys.house/application/o/authorize
+      AUTH_PROVIDERS: oidc
+      BASE_URL: https://home.bodkys.house
+      HOMARR_FQDN: home.bodkys.house
+      NEXTAUTH_URL: https://home.bodkys.house
+      OIDC_CLIENT_ID: ${PORTAINER_OIDC_ID}
+      OIDC_CLIENT_SECRET: ${PORTAINER_OIDC_SECRET}
+      OIDC_SLUG: homarr
+      SECRET_ENCRYPTION_KEY: ${PORTAINER_ENCRYPTION_KEY}
+      TZ: Europe/Berlin
     image: ghcr.io/homarr-labs/homarr:v1.26.0
     labels:
       traefik.docker.network: traefik_traefik
