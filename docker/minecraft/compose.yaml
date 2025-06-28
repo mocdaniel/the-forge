@@ -26,6 +26,8 @@ services:
       VIEW_DISTANCE: "20"
       WHITELIST: "Excaaliibur,SirPigley,DeltaP,IDomDomI,Cooksalt,Honigmond27,DieFaule,KanonenGurke,Tobiwan_99,Trix213,Snegge5,pfief"
     image: itzg/minecraft-server:java21
+    labels:
+      wud.watch: false
     ports:
       - 25565:25565
     restart: unless-stopped
