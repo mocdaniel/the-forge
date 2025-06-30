@@ -1,7 +1,7 @@
 services:
   ghostfolio:
     container_name: ghostfolio
-    image: ghostfolio/ghostfolio:2.174.0
+    image: ghostfolio/ghostfolio:2.175.0
     environment:
       ACCESS_TOKEN_SALT: ${PORTAINER_ACCESS_TOKEN_SALT}
       DATABASE_URL: postgresql://ghostfolio:${PORTAINER_POSTGRES_PASSWORD}@postgres:5432/ghostfolio?connect_timeout=300&sslmode=prefer
