@@ -1,7 +1,7 @@
 services:
   actual:
     container_name: actual
-    image: actualbudget/actual-server:25.6.1
+    image: actualbudget/actual-server:25.7.0
     labels:
       traefik.enable: true
       traefik.http.routers.actual.entrypoints: websecure
