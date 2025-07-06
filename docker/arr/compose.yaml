@@ -23,6 +23,30 @@ services:
       - jellyfin_data:/config
       - /mnt/media/data:/data
 
+  prowlarr:
+    container_name: prowlarr
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      UMASK: "002"
+      TZ: Europe/Berlin
+    image: ghcr.io/hotio/prowlarr:release-1.37.0.5076
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.prowlarr.entrypoints: websecure
+      traefik.http.routers.prowlarr.rule: Host(`prowlarr.bodkys.house`)
+      traefik.http.routers.prowlarr.service: prowlarr
+      traefik.http.routers.prowlarr.tls.certResolver: civo
+      traefik.http.routers.prowlarr.tls.domains.0.main: prowlarr.bodkys.house
+      traefik.http.services.prowlarr.loadbalancer.server.port: 9696
+      wud.tag.include: ^\release-d+\.\d+\.\d+\.d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - prowlarr_data:/config
+
   radarr:
     container_name: radarr
     environment:
@@ -91,5 +115,6 @@ networks:
 
 volumes:
   jellyfin_data: {}
+  prowlarr_data: {}
   radarr_data: {}
   transmission_data: {}
