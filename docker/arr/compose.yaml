@@ -1,4 +1,16 @@
 services:
+  flaresolverr:
+    container_name: flaresolverr
+    environment:
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/Berlin
+    image: ghcr.io/flaresolverr/flaresolverr:v3.3.25
+    labels:
+      wud.tag.include: ^v\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+
   jellyfin:
     container_name: jellyfin
     environment:
@@ -15,7 +27,7 @@ services:
       traefik.http.routers.jellyfin.tls.certResolver: civo
       traefik.http.routers.jellyfin.tls.domains.0.main: jellyfin.bodkys.house
       traefik.http.services.jellyfin.loadbalancer.server.port: 8096
-      wud.tag.include: ^\release-d+\.\d+\.\d+$$
+      wud.tag.include: ^release-\d+\.\d+\.\d+$$
     networks:
       - traefik_traefik
     restart: unless-stopped
@@ -40,7 +52,7 @@ services:
       traefik.http.routers.prowlarr.tls.certResolver: civo
       traefik.http.routers.prowlarr.tls.domains.0.main: prowlarr.bodkys.house
       traefik.http.services.prowlarr.loadbalancer.server.port: 9696
-      wud.tag.include: ^\release-d+\.\d+\.\d+\.d+$$
+      wud.tag.include: ^release-\d+\.\d+\.\d+\.d+$$
     networks:
       - traefik_traefik
     restart: unless-stopped
@@ -64,7 +76,7 @@ services:
       traefik.http.routers.radarr.tls.certResolver: civo
       traefik.http.routers.radarr.tls.domains.0.main: radarr.bodkys.house
       traefik.http.services.radarr.loadbalancer.server.port: 7878
-      wud.tag.include: ^\release-d+\.\d+\.\d+\.d+$$
+      wud.tag.include: ^release-\d+\.\d+\.\d+\.d+$$
     networks:
       - traefik_traefik
     restart: unless-stopped
