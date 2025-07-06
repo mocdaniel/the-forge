@@ -1,0 +1,95 @@
+services:
+  jellyfin:
+    container_name: jellyfin
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/Berlin
+    image: ghcr.io/hotio/jellyfin:release-10.10.7
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.jellyfin.entrypoints: websecure
+      traefik.http.routers.jellyfin.rule: Host(`jellyfin.bodkys.house`)
+      traefik.http.routers.jellyfin.service: jellyfin
+      traefik.http.routers.jellyfin.tls.certResolver: civo
+      traefik.http.routers.jellyfin.tls.domains.0.main: jellyfin.bodkys.house
+      traefik.http.services.jellyfin.loadbalancer.server.port: 8096
+      wud.tag.include: ^\release-d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - jellyfin_data:/config
+      - /mnt/media/data:/data
+
+  radarr:
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - UMASK=002
+    image: ghcr.io/hotio/radarr:release-5.26.2.10099
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.radarr.entrypoints: websecure
+      traefik.http.routers.radarr.rule: Host(`radarr.bodkys.house`)
+      traefik.http.routers.radarr.service: radarr
+      traefik.http.routers.radarr.tls.certResolver: civo
+      traefik.http.routers.radarr.tls.domains.0.main: radarr.bodkys.house
+      traefik.http.services.radarr.loadbalancer.server.port: 7878
+      wud.tag.include: ^\release-d+\.\d+\.\d+\.d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - radarr_data:/config
+      - /mnt/media/data:/data
+
+  transmission:
+    cap_add:
+      - NET_ADMIN
+    container_name: transmission
+    environment:
+      LOCAL_NETWORK: 192.168.1.0/24
+      OPENVPN_CONFIG: node-ch.protonvpn.udp
+      OPENVPN_PROVIDER: custom
+      OPENVPN_USERNAME: ${PORTAINER_PROTONVPN_USERNAME}
+      OPENVPN_PASSWORD: ${PORTAINER_PROTONVPN_PASSWORD}
+      PASS: ${PORTAINER_TRANSMISSION_PASSWORD}
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/Berlin
+      UMASK: "002"
+      USER: ${PORTAINER_TRANSMISSION_USERNAME}
+    image: haugene/transmission-openvpn:5.3.2
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.transmission.entrypoints: websecure
+      traefik.http.routers.transmission.rule: Host(`transmission.bodkys.house`)
+      traefik.http.routers.transmission.service: transmission
+      traefik.http.routers.transmission.tls.certResolver: civo
+      traefik.http.routers.transmission.tls.domains.0.main: transmission.bodkys.house
+      traefik.http.services.transmission.loadbalancer.server.url: http://192.168.1.7:9091
+      wud.tag.include: ^\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    ports:
+      - 9091:9091
+    restart: unless-stopped
+    volumes:
+      - transmission_data:/config
+      - /mnt/media/data:/data
+      - /opt/docker/torrent/protonvpn/:/etc/openvpn/custom/
+
+networks:
+  traefik_traefik:
+    external: true
+
+volumes:
+  jellyfin_data: {}
+  radarr_data: {}
+  transmission_data: {}
