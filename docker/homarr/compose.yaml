@@ -26,7 +26,7 @@ services:
       OIDC_SLUG: homarr
       SECRET_ENCRYPTION_KEY: ${PORTAINER_ENCRYPTION_KEY}
       TZ: Europe/Berlin
-    image: ghcr.io/homarr-labs/homarr:v1.26.0
+    image: ghcr.io/homarr-labs/homarr:v1.27.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
