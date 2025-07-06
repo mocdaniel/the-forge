@@ -12,7 +12,7 @@ services:
       WUD_WATCHER_pandora_CERTFILE: /certs/wud.pem
       WUD_WATCHER_pandora_KEYFILE: /certs/wud.key
       WUD_WATCHER_pandora_PORT: 2376
-    image: getwud/wud:8.0.1
+    image: getwud/wud:8.1.1
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
