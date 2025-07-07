@@ -122,6 +122,7 @@ services:
       PASS: ${PORTAINER_TRANSMISSION_PASSWORD}
       PGID: "1000"
       PUID: "1000"
+      TRANSMISSION_WEB_UI: flood-for-transmission
       TZ: Europe/Berlin
       UMASK: "002"
       USER: ${PORTAINER_TRANSMISSION_USERNAME}
