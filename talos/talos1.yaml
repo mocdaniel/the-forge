@@ -1,0 +1,15 @@
+machine:
+  certSANs:
+  - talos1
+  - talos1.bodkys.house
+  - talos.bodkys.house
+  - 192.168.1.11
+
+  network:
+    interfaces:
+    - interface: end0
+      addresses:
+      - 192.168.1.11/24
+      routes:
+      - network: 0.0.0.0/0
+        gateway: 192.168.1.1

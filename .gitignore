@@ -1,3 +1,5 @@
 venv/
 geerlingguy.docker/
 *.log
+secrets.yaml
+*-patched.yaml

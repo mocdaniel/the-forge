@@ -10,9 +10,12 @@ spec:
   destination:
     name: in-cluster
     namespace: argocd
-  project: argocd
+  project: default
   source:
     repoURL: https://github.com/mocdaniel/the-forge.git
-    path: gitops/manifests/argocd
+    path: gitops/manifests/bootstrap/argocd
     directory:
       recurse: true
+  syncPolicy:
+    automated:
+      selfHeal: true

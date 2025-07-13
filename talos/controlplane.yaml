@@ -1,0 +1,37 @@
+cluster:
+  network:
+    cni:
+      name: none
+
+  apiServer:
+    certSANs:
+      - talos.bodkys.house
+      - talos1.bodkys.house
+      - talos2.bodkys.house
+      - talos3.bodkys.house
+    admissionControl:
+      - name: PodSecurity
+        configuration:
+          apiVersion: pod-security.admission.config.k8s.io/v1alpha1
+          defaults:
+            audit: restricted
+            audit-version: latest
+            enforce: baseline
+            enforce-version: latest
+            warn: restricted
+            warn-version: latest
+          exemptions:
+            namespaces:
+            - longhorn-system
+            runtimeClasses: []
+            usernames: []
+          kind: PodSecurityConfiguration
+        
+  proxy:
+    disabled: true
+
+  extraManifests:
+    - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/refs/heads/release-0.9/deploy/standalone-install.yaml
+    - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+  allowSchedulingOnControlPlanes: true

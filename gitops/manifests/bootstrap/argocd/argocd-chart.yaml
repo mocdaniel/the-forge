@@ -10,11 +10,11 @@ spec:
   destination:
     name: in-cluster
     namespace: argocd
-  project: argocd
+  project: default
   source:
     chart: argo-cd
     repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 7.8.28
+    targetRevision: 8.1.3
     helm:
       releaseName: argocd
       valuesObject:
@@ -48,6 +48,46 @@ spec:
               name: argo
               type: helm
               project: argocd
+            cert-manager-webhook-civo:
+              url: ghcr.io/okteto # no https because OCI
+              name: cert-manager-webhook-civo
+              type: helm
+              project: argocd
+              enableOCI: "true"
+            cert-manager:
+              url: https://charts.jetstack.io
+              name: cert-manager
+              type: helm
+              project: argocd
+            cnpg:
+              url: https://cloudnative-pg.github.io/charts
+              name: cnpg
+              type: helm
+              project: argocd
+            external-dns:
+              url: https://kubernetes-sigs.github.io/external-dns
+              name: external-dns
+              type: helm
+              project: argocd
+            external-secrets:
+              url: https://charts.external-secrets.io
+              name: external-secrets
+              type: helm
+              project: argocd
+            homelab:
+              url: https://github.com/mocdaniel/homelab.git
+              name: homelab
+              type: git
+            ingress-nginx:
+              url: https://kubernetes.github.io/ingress-nginx
+              name: ingress-nginx
+              type: helm
+              project: infrastructure
+            longhorn:
+              url: https://charts.longhorn.io/
+              name: longhorn
+              type: helm
+              project: infrastructure
           secret:
             argocdServerAdminPassword: "$2a$10$5CsSK3647KGsYW1u12XanuzjKT32wvLLomcaNsQYuH14or4BiLmy6"
         global:
