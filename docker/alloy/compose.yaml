@@ -10,7 +10,7 @@ services:
       GCLOUD_FM_COLLECTOR_ID: ${PORTAINER_HOST}.bodkys.house
       WUD_OAUTH_SECRET: ${PORTAINER_WUD_OAUTH_SECRET:-notneeded}
     hostname: ${PORTAINER_HOST}.bodkys.house
-    image: grafana/alloy:v1.9.2
+    image: grafana/alloy:v1.10.0
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
