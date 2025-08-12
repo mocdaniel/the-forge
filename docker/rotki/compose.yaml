@@ -1,0 +1,32 @@
+services:
+  rotki:
+    container_name: rotki
+    environment:
+      ROTKI_ACCEPT_DOCKER_RISK: "1" 
+      TZ: Europe/Berlin
+    image: rotki/rotki:v1.39.1
+    labels:
+      traefik.docker.network: traefik_traefik
+      traefik.enable: true
+      traefik.http.routers.rotki.entrypoints: websecure
+      traefik.http.routers.rotki.rule: Host(`rotki.bodkys.house`)
+      traefik.http.routers.rotki.service: rotki
+      traefik.http.routers.rotki.tls.certResolver: civo
+      traefik.http.routers.rotki.tls.domains.0.main: rotki.bodkys.house
+      traefik.http.services.rotki.loadbalancer.server.port: 80
+      wud.link.template: https://github.com/rotki/rotki/releases/tag/$${transformed}
+      wud.tag.include: ^v\d+\.\d+\.\d+$$
+    networks:
+      - traefik_traefik
+    restart: unless-stopped
+    volumes:
+      - rotki-data:/data
+      - rotki-logs:/logs
+
+networks:
+  traefik_traefik:
+    external: true
+
+volumes:
+  rotki-data: {}
+  rotki-logs: {}
