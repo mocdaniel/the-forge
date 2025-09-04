@@ -1,7 +1,7 @@
 services:
   adguard:
     container_name: adguard
-    image: adguard/adguardhome:v0.107.63
+    image: adguard/adguardhome:v0.107.65
     labels:
       traefik.enable: true
       traefik.http.routers.adguard.entrypoints: websecure
