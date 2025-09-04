@@ -4,7 +4,7 @@ services:
     environment:
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Europe/Berlin
-    image: ghcr.io/flaresolverr/flaresolverr:v3.3.25
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.0
     labels:
       wud.tag.include: ^v\d+\.\d+\.\d+$$
     networks:
