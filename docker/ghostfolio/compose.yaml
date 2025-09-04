@@ -41,7 +41,7 @@ services:
 
   redis:
     container_name: ghostfolio-redis
-    image: redis:alpine3.21
+    image: redis:alpine3.22
     labels:
       wud.tag.include: ^alpine\d+\.\d+$$
     networks:
