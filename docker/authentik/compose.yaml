@@ -23,7 +23,7 @@ services:
   redis:
     command: --save 60 1 --loglevel warning
     container_name: authentik-redis
-    image: redis:alpine3.21
+    image: redis:alpine3.22
     healthcheck:
       interval: 30s
       retries: 5
