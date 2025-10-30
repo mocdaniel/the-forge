@@ -17,7 +17,7 @@ services:
       CIVO_POLLING_INTERVAL: "5"
       CIVO_PROPAGATION_TIMEOUT: "60"
       CIVO_TOKEN_FILE: /run/secrets/civo_token
-    image: traefik:v3.5.3
+    image: traefik:v3.5.4
     labels:
       traefik.enable: true
       traefik.http.routers.api.entrypoints: websecure
