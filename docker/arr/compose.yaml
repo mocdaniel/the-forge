@@ -17,7 +17,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/Berlin
-    image: ghcr.io/hotio/jellyfin:release-10.11.0
+    image: ghcr.io/hotio/jellyfin:release-10.11.1
     labels:
       traefik.docker.network: traefik_traefik
       traefik.enable: true
